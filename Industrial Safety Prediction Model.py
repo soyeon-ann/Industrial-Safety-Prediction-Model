@@ -38,10 +38,9 @@ correlation_matrix = data[features + [target]].corr()
 plt.figure(figsize=(10, 8))
 sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f')
 
-# 결과 폴더 생성 (없으면 생성)
-os.makedirs('results', exist_ok=True)
-plt.savefig('results/correlation_matrix.png')
-plt.show()
+# 'results' 파일에 시각화된 그래프 저장
+plt.savefig('results.png')
+plt.close()  # 그래프를 저장한 후 창을 닫아 메모리 절약
 
 # 훈련 데이터와 테스트 데이터로 나누기
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -64,9 +63,9 @@ plt.ylim(0, 1)
 plt.title('Model Accuracy')
 plt.ylabel('Accuracy')
 
-# 그래프를 'results' 폴더에 저장
-plt.savefig('results/accuracy_graph.png')
-plt.show()
+# 'results' 파일에 성능 평가 그래프 저장
+plt.savefig('results.png', dpi=300, format='png')
+plt.close()  # 그래프를 저장한 후 창을 닫아 메모리 절약
 
 # 혼동 행렬 출력
 conf_matrix = confusion_matrix(y_test, y_pred)
@@ -80,11 +79,6 @@ plt.title('Confusion Matrix')
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
 
-# 혼동 행렬을 'results' 폴더에 저장
-plt.savefig('results/confusion_matrix.png')
-plt.show()
-
-# 최종 코드 저장
-os.makedirs('final exam', exist_ok=True)
-final_code_path = 'final exam/Industrial-Safety-Prediction-Model.py'
-
+# 'results' 파일에 혼동 행렬 시각화 저장
+plt.savefig('results.png', dpi=300, format='png')
+plt.close()  # 그래프를 저장한 후 창을 닫아 메모리 절약
