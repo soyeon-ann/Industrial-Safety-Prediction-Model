@@ -11,7 +11,6 @@ file_path = 'data/PredictSafe.csv'
 data = pd.read_csv(file_path)
 
 # 데이터 전처리 (IQR 방식으로 이상치 처리)
-# 숫자형 데이터에 대해 IQR을 이용한 이상치 제거
 for column in data.columns:
     if data[column].dtype != 'object':  # 숫자형 데이터에 대해서만 처리
         Q1 = data[column].quantile(0.25)
@@ -38,6 +37,8 @@ y = data[target]
 correlation_matrix = data[features + [target]].corr()
 plt.figure(figsize=(10, 8))
 sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f')
+
+# 결과 폴더 생성 (없으면 생성)
 os.makedirs('results', exist_ok=True)
 plt.savefig('results/correlation_matrix.png')
 plt.show()
@@ -56,12 +57,14 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print(f'Accuracy: {accuracy * 100:.2f}%')
 
-# 성능 평가 그래프
+# 성능 평가 그래프 (accuracy_graph.png 저장)
 plt.figure(figsize=(6, 4))
 plt.bar(['Accuracy'], [accuracy], color='green')
 plt.ylim(0, 1)
 plt.title('Model Accuracy')
 plt.ylabel('Accuracy')
+
+# 그래프를 'results' 폴더에 저장
 plt.savefig('results/accuracy_graph.png')
 plt.show()
 
@@ -76,6 +79,8 @@ sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False)
 plt.title('Confusion Matrix')
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
+
+# 혼동 행렬을 'results' 폴더에 저장
 plt.savefig('results/confusion_matrix.png')
 plt.show()
 
