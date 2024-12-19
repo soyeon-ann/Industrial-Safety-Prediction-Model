@@ -46,6 +46,11 @@ precision = precision_score(y_test, y_pred)
 recall = recall_score(y_test, y_pred)
 f1 = f1_score(y_test, y_pred)
 
+print(f'Accuracy: {accuracy * 100:.2f}%')
+print(f'Precision: {precision:.2f}')
+print(f'Recall: {recall:.2f}')
+print(f'F1 Score: {f1:.2f}')
+
 # Feature Importances 그래프
 feature_importances = pd.Series(model.feature_importances_, index=X.columns)
 plt.figure(figsize=(8, 6))
@@ -54,25 +59,24 @@ os.makedirs('results', exist_ok=True)
 plt.savefig('results/feature_importances.png')
 plt.show()
 
-# 성능 평가 및 혼동 행렬 그래프
-conf_matrix = confusion_matrix(y_test, y_pred)
-
-plt.figure(figsize=(12, 6))
-plt.subplot(1, 2, 1)
+# 성능 평가 그래프
+plt.figure(figsize=(6, 4))
 plt.bar(['Accuracy', 'Precision', 'Recall', 'F1 Score'], [accuracy, precision, recall, f1], color=['green', 'blue', 'orange', 'red'])
 plt.ylim(0, 1)
 plt.title('Model Performance Metrics')
 plt.ylabel('Score')
+os.makedirs('results', exist_ok=True)
+plt.savefig('results/performance_metrics_graph.png')
+plt.show()
 
-plt.subplot(1, 2, 2)
+# 혼동 행렬 그래프
+conf_matrix = confusion_matrix(y_test, y_pred)
+plt.figure(figsize=(8, 6))
 sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False)
 plt.title('Confusion Matrix')
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
-
-plt.tight_layout()
-os.makedirs('results', exist_ok=True)
-plt.savefig('results/performance_and_confusion_matrix.png')
+plt.savefig('results/confusion_matrix.png')
 plt.show()
 
 # 최종 코드 저장
